@@ -6,6 +6,8 @@ const Env = use('Env')
 /** @type {import('@adonisjs/ignitor/src/Helpers')} */
 const Helpers = use('Helpers')
 
+const { knexSnakeCaseMappers } = require("objection")
+
 module.exports = {
   /*
   |--------------------------------------------------------------------------
@@ -48,7 +50,8 @@ module.exports = {
   | npm i --save mysql
   |
   */
-  mysql: {
+  mysql: ({
+    ...{
     client: 'mysql',
     connection: {
       host: Env.get('DB_HOST', 'localhost'),
@@ -58,8 +61,9 @@ module.exports = {
       database: Env.get('DB_DATABASE', 'adonis')
     },
     debug: Env.get('DB_DEBUG', false)
-  },
-
+    },
+    ...knexSnakeCaseMappers()
+  }),
   /*
   |--------------------------------------------------------------------------
   | PostgreSQL
