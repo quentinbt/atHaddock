@@ -12,6 +12,8 @@ class ApartmentController {
   * /apartments:
   *   get:
   *     summary: rest api to list apartments
+  *     produces:
+  *       - application/json
   *     responses:
   *       200:
   *         description: list apartments
@@ -87,7 +89,7 @@ class ApartmentController {
   *           $ref: '#/definitions/Apartment'
   */
   async show ({ params, response }) {
-    const apartment = await Apartment.findOrFail(+params.id)
+    const apartment = await Apartment.findOrFail(params.id)
     response.status(200).json(apartment)
   }
 
@@ -126,12 +128,12 @@ class ApartmentController {
   *                   type: string
   *     responses:
   *       200:
-  *         description: get an apartment
+  *         description: updated apartment
   *         schema:
   *           $ref: '#/definitions/Apartment'
   */
   async update ({ params, request, response }) {
-    const apartmentToUpdate = await Apartment.findOrFail(+params.id)
+    const apartmentToUpdate = await Apartment.findOrFail(params.id)
     const { apartment } = request.body
     apartmentToUpdate.merge(apartment)
     await apartmentToUpdate.save()
@@ -154,12 +156,12 @@ class ApartmentController {
   *         description: Numeric ID of the apartment to delete
   *     responses:
   *       200:
-  *         description: get an apartment
+  *         description: deleted apartment
   *         schema:
   *           $ref: '#/definitions/Apartment'
   */
-  async destroy ({ params, request, response }) {
-    const apartmentToDelete = await Apartment.findOrFail(+params.id)
+  async destroy ({ params, response }) {
+    const apartmentToDelete = await Apartment.findOrFail(params.id)
     await apartmentToDelete.delete()
     response.status(200).json(apartmentToDelete)
   }

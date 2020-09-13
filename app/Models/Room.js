@@ -6,19 +6,19 @@ const Model = use('Model')
 /** 
 *  @swagger
 *  definitions:
-*    Apartment:
+*    Room:
 *      type: object
 *      properties:
 *        id:
 *          type: number
-*        name:
-*          type: string
-*        street:
-*          type: string
-*        zipCode:
-*          type: string
-*        city:
-*          type: string
+*        number:
+*          type: number
+*        area:
+*          type: number
+*        priceCents:
+*          type: number
+*        apartmentId:
+*          type: number
 *        createdAt:
 *          type: string
 *          format: date-time
@@ -26,15 +26,15 @@ const Model = use('Model')
 *          type: string
 *          format: date-time
 *      required:
-*        - name
-*        - street
-*        - zipCode
-*        - city
+*        - number
+*        - area
+*        - priceCents
+*        - apartmentId
 */
-class Apartment extends Model {
-  rooms () {
-    return this.hasMany('App/Models/Room')
+class Room extends Model {
+  apartment () {
+    return this.belongsTo('App/Models/Room')
   }
 }
 
-module.exports = Apartment
+module.exports = Room
