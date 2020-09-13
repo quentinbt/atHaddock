@@ -21,3 +21,11 @@ Factory.blueprint('App/Models/Apartment', async faker => {
     city: faker.city()
   }
 })
+
+Factory.blueprint('App/Models/Room', async faker => {
+  return {
+    number: faker.integer({ min: 1, max: 100 }),
+    area: faker.floating({ fixed: 2, min: 1, max: 1000 }),
+    priceCents: faker.integer({ min: 1, max: 1000 }),
+  }
+})
