@@ -20,3 +20,4 @@ Route.get('/', () => {
 })
 
 Route.resource('apartments', 'ApartmentController')
+Route.resource('apartments.rooms', 'RoomController')
