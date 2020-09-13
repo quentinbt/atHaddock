@@ -32,6 +32,9 @@ const Model = use('Model')
 *        - city
 */
 class Apartment extends Model {
+  rooms () {
+    return this.hasMany('App/Models/Room')
+  }
 }
 
 module.exports = Apartment
