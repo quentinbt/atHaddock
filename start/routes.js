@@ -19,5 +19,7 @@ Route.get('/', () => {
   return { status: 'server is UP!' }
 })
 
-Route.resource('apartments', 'ApartmentController')
-Route.resource('apartments.rooms', 'RoomController')
+Route.resource('apartments', 'ApartmentController').middleware(['auth:jwt'])
+Route.resource('apartments.rooms', 'RoomController').middleware(['auth:jwt'])
+Route.post('login', 'UserController.login')
+Route.post('signup', 'UserController.signup')
