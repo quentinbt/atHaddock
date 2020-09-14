@@ -13,6 +13,8 @@ class RoomController {
   * /apartments/{apartmentId}/rooms:
   *   get:
   *     summary: rest api to list rooms
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
@@ -43,6 +45,8 @@ class RoomController {
   *     summary: rest api to create an rooms
   *     produces:
   *       - application/json
+  *     security:
+  *       - bearerAuth: []
   *     parameters:
   *       - in: path
   *         name: apartmentId
@@ -87,6 +91,8 @@ class RoomController {
   * /apartments/{apartmentId}/rooms/{roomId}:
   *   get:
   *     summary: rest api to get details of a room
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
@@ -119,6 +125,8 @@ class RoomController {
   * /apartments/{apartmentId}/rooms/{roomId}:
   *   put:
   *     summary: rest api to update a room
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
@@ -171,6 +179,8 @@ class RoomController {
   * /apartments/{apartmentId}/rooms/{roomId}:
   *   delete:
   *     summary: rest api to delete a room
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
