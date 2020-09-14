@@ -12,6 +12,8 @@ class ApartmentController {
   * /apartments:
   *   get:
   *     summary: rest api to list apartments
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     responses:
@@ -32,6 +34,8 @@ class ApartmentController {
   * /apartments:
   *   post:
   *     summary: rest api to create an apartment
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
@@ -73,6 +77,8 @@ class ApartmentController {
   * /apartments/{apartmentId}:
   *   get:
   *     summary: rest api to get details of an apartment
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
@@ -98,6 +104,8 @@ class ApartmentController {
   * /apartments/{apartmentId}:
   *   put:
   *     summary: rest api to update an apartment
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
@@ -145,6 +153,8 @@ class ApartmentController {
   * /apartments/{apartmentId}:
   *   delete:
   *     summary: rest api to delete an apartment
+  *     security:
+  *       - bearerAuth: []
   *     produces:
   *       - application/json
   *     parameters:
