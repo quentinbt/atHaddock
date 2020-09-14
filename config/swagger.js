@@ -15,31 +15,26 @@ module.exports = {
   options: {
     swaggerDefinition: {
       info: {
-        title: 'Adonis 💘 Swagger',
+        title: 'HADDOCK API DOCUMENTATION',
         version: '1.0.0',
       },
-  
+
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      },
+
       basePath: '/',
 
       // Example security definitions.
       securityDefinitions: {
-        ApiKey: {
-          description: 'ApiKey description',
+        bearerAuth: {
+          type: 'apiKey',
+          in: 'header',
           name: 'Authorization'
-        },
-
-        // OAuth2 configuration
-        OAuth2: {
-          authorizationUrl: 'https://example.com/oauth/authorize',
-          tokenUrl: 'https://example.com/oauth/token',
-
-          // define your scopes here
-          // remove read, write and admin if not necessary
-          scopes: {
-            read: 'Grants read access (this is just sample)',
-            write: 'Grants write access (this is just sample)',
-            admin: 'Grants read and write access to administrative information (this is just sample)'
-          }
         },
       }
     },
