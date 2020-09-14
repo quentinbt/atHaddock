@@ -82,7 +82,15 @@ class UserController {
   *         schema:
   *           type: object
   *           properties:
-  *             username:
+  *             firstName:
+  *               type: string
+  *             lastName:
+  *               type: string
+  *             phone:
+  *               type: string
+  *             birthDate:
+  *               type: string
+  *             nationality:
   *               type: string
   *             email:
   *               type: string
@@ -126,6 +134,26 @@ class UserController {
         message: 'There was a problem creating the user, please try again later.'
       })
     }
+  }
+
+  /**
+  * @swagger
+  * /whoami:
+  *   get:
+  *     summary: rest api to get my information
+  *     produces:
+  *       - application/json
+  *     security:
+  *       - bearerAuth: []
+  *     responses:
+  *       200:
+  *         description: user info
+  *         schema:
+  *           $ref: '#/definitions/User'
+  */
+  async whoami ({ auth, response }) {
+    const currentUser = await auth.getUser()
+    response.status(200).json(currentUser)
   }
 }
 
