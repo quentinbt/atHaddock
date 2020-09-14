@@ -32,7 +32,11 @@ Factory.blueprint('App/Models/Room', async faker => {
 
 Factory.blueprint('App/Models/User', async faker => {
   return {
-    username: faker.name(),
+    firstName: faker.name(),
+    lastName: faker.name(),
+    phone: faker.phone(),
+    birthDate: faker.date({string: true}),
+    nationality: faker.country(),
     email: faker.email(),
     password: "password",
   }
