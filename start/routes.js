@@ -21,5 +21,6 @@ Route.get('/', () => {
 
 Route.resource('apartments', 'ApartmentController').middleware(['auth:jwt'])
 Route.resource('apartments.rooms', 'RoomController').middleware(['auth:jwt'])
+Route.get('whoami', 'UserController.whoami').middleware(['auth:jwt'])
 Route.post('login', 'UserController.login')
 Route.post('signup', 'UserController.signup')

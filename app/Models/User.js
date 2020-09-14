@@ -6,6 +6,43 @@ const Model = use('Model')
 /** @type {import('@adonisjs/framework/src/Hash')} */
 const Hash = use('Hash')
 
+/** 
+*  @swagger
+*  definitions:
+*    User:
+*      type: object
+*      properties:
+*        id:
+*          type: number
+*        firstName:
+*          type: string
+*        lastName:
+*          type: string
+*        phone:
+*          type: string
+*        birthDate:
+*          type: string
+*        nationality:
+*          type: string
+*        email:
+*          type: string
+*          format: email
+*        password:
+*          type: string
+*        createdAt:
+*          type: string
+*          format: date-time
+*        updatedAt:
+*          type: string
+*          format: date-time
+*      required:
+*        - firstName
+*        - lastName
+*        - phone
+*        - birthDate
+*        - nationality
+*        - email
+*/
 class User extends Model {
   static boot () {
     super.boot()
@@ -19,6 +56,10 @@ class User extends Model {
         userInstance.password = await Hash.make(userInstance.password)
       }
     })
+  }
+
+  static get hidden () {
+    return ['password']
   }
 
   /**
