@@ -42,6 +42,8 @@ class UserController {
   *               type: string
   *             data:
   *               type: string
+  *       500:
+  *         description: server error
   */
   async login ({ request, response, auth }) {
     try {
@@ -116,6 +118,8 @@ class UserController {
   *               type: string
   *             data:
   *               type: string
+  *       500:
+  *         description: server error
   */
   async signup ({ request, auth, response }) {
     try {
@@ -152,6 +156,10 @@ class UserController {
   *         description: user info
   *         schema:
   *           $ref: '#/definitions/User'
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async whoami ({ auth, response }) {
     const currentUser = await auth.getUser()
