@@ -1,28 +1,78 @@
-# Adonis API application
+# at Haddock
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+this project is done with node/adonis
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+[demo here!!!](https://at-haddock.herokuapp.com/)
 
-## Setup
+[documentations here!!!](https://at-haddock.herokuapp.com//docs)
+you can tests any api via the "Try it out" button in the documentation page
 
-Use the adonis command to install the blueprint
+## Requirements
+
+- npm >= 6.9.0
+- node >= 12.1.0
+- docker
+- docker-compose
+
+## setup
+
+start database (mysql)
 
 ```bash
-adonis new yardstick --api-only
+docker-compose up
 ```
 
-or manually clone the repo and then run `npm install`.
+install backend
+```bash
+npm install
+```
 
+set env
+```bash
+cp .env.example .env
+```
 
-### Migrations
+run database migrations
+```bash
+node ace migration:run
+```
 
-Run the following command to run startup migrations.
+## Start
 
-```js
-adonis migration:run
+start backend server
+```bash
+npm start
+```
+
+## Tests
+
+run test suite
+```bash
+npm run test
+```
+
+## Documentation
+
+check the url
+```bash
+http://127.0.0.1:3333/docs/
+```
+
+## Deploy on heroku
+
+### Requirements
+
+- heroku cli
+
+### set heroku
+
+Run the following command to the app to git config.
+
+```bash
+heroku git:clone -a app-name
+```
+
+### deploy
+```bash
+git push heroku master
 ```
