@@ -53,7 +53,7 @@ test('get detail of a room', async ({ client }) => {
   })
 })
 
-test('when not auth client get 401 when trying to create an room', async ({ client }) => {
+test('when not auth client get 401 when trying to create a room', async ({ client }) => {
   const room = {
     number: 42,
     area: 51.69,
@@ -64,7 +64,7 @@ test('when not auth client get 401 when trying to create an room', async ({ clie
   response.assertStatus(401)
 })
 
-test('create an room', async ({ client }) => {
+test('create a room', async ({ client }) => {
   const room = {
     number: 42,
     area: 51.69,
@@ -80,13 +80,13 @@ test('create an room', async ({ client }) => {
   })
 })
 
-test('when not auth client get 401 when trying to update an apartment', async ({ client }) => {
+test('when not auth client get 401 when trying to update a room', async ({ client }) => {
   const response = await client.put(`/apartments/${apartment.id}/rooms/${room.id}`).send({ room: {number: 42} }).end()
 
   response.assertStatus(401)
 })
 
-test('update an apartment', async ({ client }) => {
+test('update a room', async ({ client }) => {
   const response = await client.put(`/apartments/${apartment.id}/rooms/${room.id}`).send({ room: {number: 42} }).loginVia(user).end()
 
   response.assertStatus(200)
@@ -98,13 +98,13 @@ test('update an apartment', async ({ client }) => {
   })
 })
 
-test('when not auth client get 401 when trying to delete an apartment', async ({ client, assert }) => {
+test('when not auth client get 401 when trying to delete a room', async ({ client, assert }) => {
   const response = await client.delete(`/apartments/${apartment.id}/rooms/${room.id}`).end()
 
   response.assertStatus(401)
 })
 
-test('delete an apartment', async ({ client, assert }) => {
+test('delete a room', async ({ client, assert }) => {
   const response = await client.delete(`/apartments/${apartment.id}/rooms/${room.id}`).loginVia(user).end()
 
   response.assertStatus(200)
@@ -116,4 +116,38 @@ test('delete an apartment', async ({ client, assert }) => {
   })
   const deletedRoom = await Room.find(room.id)
   assert.equal(deletedRoom, null)
+})
+
+test('when not auth client get 401 when trying to rent a room', async ({ client, assert }) => {
+  const response = await client.post(`/apartments/${apartment.id}/rooms/${room.id}/rent`).end()
+
+  response.assertStatus(401)
+})
+
+test('rent a room', async ({ client, assert }) => {
+  const response = await client.post(`/apartments/${apartment.id}/rooms/${room.id}/rent`).loginVia(user).end()
+
+  response.assertStatus(200)
+  response.assertJSONSubset({
+    number: room.number,
+    area: room.area,
+    priceCents: room.priceCents,
+    apartmentId: apartment.id,
+    user_id: user.id
+  })
+})
+
+test('get 401 when try to rent a room when user already rent another room', async ({ client, assert }) => {
+  await room.tenant().associate(user)
+  const response = await client.post(`/apartments/${apartment.id}/rooms/${room.id}/rent`).loginVia(user).end()
+
+  response.assertStatus(401)
+})
+
+test('get 401 when try to rent a room already rented', async ({ client, assert }) => {
+  const anotherUser = await Factory.model('App/Models/User').create()
+  await room.tenant().associate(anotherUser)
+  const response = await client.post(`/apartments/${apartment.id}/rooms/${room.id}/rent`).loginVia(user).end()
+
+  response.assertStatus(401)
 })

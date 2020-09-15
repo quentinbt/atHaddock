@@ -208,6 +208,92 @@ class RoomController {
     await roomToDelete.delete()
     response.status(200).json(roomToDelete)
   }
+
+  /**
+  * @swagger
+  * /apartments/{apartmentId}/rooms/{roomId}/rent:
+  *   post:
+  *     summary: rest api to rent a room for current user
+  *     security:
+  *       - bearerAuth: []
+  *     produces:
+  *       - application/json
+  *     parameters:
+  *       - in: path
+  *         name: apartmentId
+  *         schema:
+  *           type: integer
+  *         required: true
+  *         description: Numeric ID of the apartment to delete
+  *       - in: path
+  *         name: roomId
+  *         schema:
+  *           type: integer
+  *         required: true
+  *         description: Numeric ID of the room to get
+  *     responses:
+  *       200:
+  *         description: rent room
+  *         schema:
+  *           $ref: '#/definitions/Room'
+  *       401:
+  *         description: when room is already rented or user rent an other room
+  */
+  async rent ({ params, auth, response }) {
+    await Apartment.findOrFail(params.apartments_id)
+    const room = await Room.findOrFail(params.id)
+    const currentUser = await auth.getUser()
+    if (room.userId) {
+      return response.status(401).json({message: 'room has already a tenant'})
+    }
+    const currentUserRoom = await currentUser.room().fetch()
+    if (currentUserRoom) {
+      return response.status(401).json({message: 'user has already a room'})
+    }
+    await room.tenant().associate(currentUser)
+    response.status(200).json(room)
+  }
+
+  /**
+  * @swagger
+  * /apartments/{apartmentId}/rooms/{roomId}/unrent:
+  *   post:
+  *     summary: rest api to unrent a room for current user
+  *     security:
+  *       - bearerAuth: []
+  *     produces:
+  *       - application/json
+  *     parameters:
+  *       - in: path
+  *         name: apartmentId
+  *         schema:
+  *           type: integer
+  *         required: true
+  *         description: Numeric ID of the apartment to delete
+  *       - in: path
+  *         name: roomId
+  *         schema:
+  *           type: integer
+  *         required: true
+  *         description: Numeric ID of the room to get
+  *     responses:
+  *       200:
+  *         description: rent room
+  *         schema:
+  *           $ref: '#/definitions/Room'
+  *       401:
+  *         description: when room is not rended by current user
+  */
+  async unrent ({ params, auth, response }) {
+    await Apartment.findOrFail(params.apartments_id)
+    const room = await Room.findOrFail(params.id)
+    const currentUser = await auth.getUser()
+    if (room.userId !== currentUser.id) {
+      return response.status(401).json({message: 'you are not tenant of this room'})
+    }
+    await room.tenant().dissociate(currentUser)
+    response.status(200).json(room)
+  }
 }
 
 module.exports = RoomController

@@ -22,5 +22,7 @@ Route.get('/', () => {
 Route.resource('apartments', 'ApartmentController').middleware(['auth:jwt'])
 Route.resource('apartments.rooms', 'RoomController').middleware(['auth:jwt'])
 Route.get('whoami', 'UserController.whoami').middleware(['auth:jwt'])
+Route.post('apartments/:apartments_id/rooms/:id/rent', 'RoomController.rent').middleware(['auth:jwt'])
+Route.post('apartments/:apartments_id/rooms/:id/unrent', 'RoomController.unrent').middleware(['auth:jwt'])
 Route.post('login', 'UserController.login')
 Route.post('signup', 'UserController.signup')
