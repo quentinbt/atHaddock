@@ -67,7 +67,7 @@ class ApartmentController {
   *             $ref: '#/definitions/Apartment'
   */
   async store ({ request, response }) {
-    const { apartment } = request.body
+    const { apartment } = request.only(['apartment.name', 'apartment.street', 'apartment.zipCode', 'apartment.city'])
     const createdApartment =  await Apartment.create(apartment)
     response.status(201).json(createdApartment)
   }
@@ -142,7 +142,7 @@ class ApartmentController {
   */
   async update ({ params, request, response }) {
     const apartmentToUpdate = await Apartment.findOrFail(params.id)
-    const { apartment } = request.body
+    const { apartment } = request.only(['apartment.name', 'apartment.street', 'apartment.zipCode', 'apartment.city'])
     apartmentToUpdate.merge(apartment)
     await apartmentToUpdate.save()
     response.status(200).json(apartmentToUpdate)

@@ -81,7 +81,7 @@ class RoomController {
   */
   async store ({ params, request, response }) {
     const apartment = await Apartment.findOrFail(params.apartments_id)
-    const { room } = request.body
+    const { room } = request.only(['room.number', 'room.area', 'room.priceCents'])
     const createdRoom = await apartment.rooms().create(room)
     response.status(201).json(createdRoom)
   }
@@ -168,7 +168,7 @@ class RoomController {
   async update ({ params, request, response }) {
     await Apartment.findOrFail(params.apartments_id)
     const roomToUpdate = await Room.findOrFail(params.id)
-    const { room } = request.body
+    const { room } = request.only(['room.number', 'room.area', 'room.priceCents'])
     roomToUpdate.merge(room)
     await roomToUpdate.save()
     response.status(200).json(roomToUpdate)
