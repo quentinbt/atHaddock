@@ -23,6 +23,10 @@ class ApartmentController {
   *           type: array
   *           items:
   *             $ref: '#/definitions/Apartment'
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async index ({ response }) {
     const apartments = await Apartment.all()
@@ -65,6 +69,12 @@ class ApartmentController {
   *           type: array
   *           items:
   *             $ref: '#/definitions/Apartment'
+  *       400:
+  *         description: missing params
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async store ({ request, response }) {
     const { apartment } = request.only(['apartment.name', 'apartment.street', 'apartment.zipCode', 'apartment.city'])
@@ -93,6 +103,10 @@ class ApartmentController {
   *         description: get an apartment
   *         schema:
   *           $ref: '#/definitions/Apartment'
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async show ({ params, response }) {
     const apartment = await Apartment.findOrFail(params.id)
@@ -139,6 +153,12 @@ class ApartmentController {
   *         description: updated apartment
   *         schema:
   *           $ref: '#/definitions/Apartment'
+  *       400:
+  *         description: missing params
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async update ({ params, request, response }) {
     const apartmentToUpdate = await Apartment.findOrFail(params.id)
@@ -169,6 +189,10 @@ class ApartmentController {
   *         description: deleted apartment
   *         schema:
   *           $ref: '#/definitions/Apartment'
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async destroy ({ params, response }) {
     const apartmentToDelete = await Apartment.findOrFail(params.id)
