@@ -31,6 +31,10 @@ class RoomController {
   *           type: array
   *           items:
   *             $ref: '#/definitions/Room'
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async index ({ params, response }) {
     const apartment = await Apartment.findOrFail(params.apartments_id)
@@ -78,6 +82,12 @@ class RoomController {
   *           type: array
   *           items:
   *             $ref: '#/definitions/Room'
+  *       400:
+  *         description: missing params
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async store ({ params, request, response }) {
     const apartment = await Apartment.findOrFail(params.apartments_id)
@@ -113,6 +123,10 @@ class RoomController {
   *         description: get a room
   *         schema:
   *           $ref: '#/definitions/Room'
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async show ({ params, response, view }) {
     const apartment = await Apartment.findOrFail(params.apartments_id)
@@ -164,6 +178,12 @@ class RoomController {
   *         description: updated room
   *         schema:
   *           $ref: '#/definitions/Room'
+  *       400:
+  *         description: missing params
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async update ({ params, request, response }) {
     await Apartment.findOrFail(params.apartments_id)
@@ -201,6 +221,10 @@ class RoomController {
   *         description: deleted room
   *         schema:
   *           $ref: '#/definitions/Room'
+  *       401:
+  *         description: User is not connected
+  *       500:
+  *         description: server error
   */
   async destroy ({ params, response }) {
     await Apartment.findOrFail(params.apartments_id)
@@ -238,6 +262,8 @@ class RoomController {
   *           $ref: '#/definitions/Room'
   *       401:
   *         description: when room is already rented or user rent an other room
+  *       500:
+  *         description: server error
   */
   async rent ({ params, auth, response }) {
     await Apartment.findOrFail(params.apartments_id)
@@ -283,6 +309,8 @@ class RoomController {
   *           $ref: '#/definitions/Room'
   *       401:
   *         description: when room is not rended by current user
+  *       500:
+  *         description: server error
   */
   async unrent ({ params, auth, response }) {
     await Apartment.findOrFail(params.apartments_id)
