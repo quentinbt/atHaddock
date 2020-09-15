@@ -45,10 +45,11 @@ class UserController {
   */
   async login ({ request, response, auth }) {
     try {
-      const user = await User.findByOrFail("email", request.body.email)
+      const login = request.only(['email', 'password'])
+      const user = await User.findByOrFail("email", login.email)
       const token = await auth.attempt(
-        request.body.email,
-        request.body.password
+        login.email,
+        login.password
       )
       await user.tokens().create({
         token: token.token,
@@ -118,7 +119,8 @@ class UserController {
   */
   async signup ({ request, auth, response }) {
     try {
-      const user = await User.create(request.body)
+      const signupData = request.only(['firstName', 'lastName', 'phone', 'birthDate', 'nationality', 'email', 'password'])
+      const user = await User.create(signupData)
       const token = await auth.generate(user)
       await user.tokens().create({
         token: token.token,
