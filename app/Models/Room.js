@@ -19,6 +19,8 @@ const Model = use('Model')
 *          type: number
 *        apartmentId:
 *          type: number
+*        userId:
+*          type: number
 *        createdAt:
 *          type: string
 *          format: date-time
@@ -34,6 +36,10 @@ const Model = use('Model')
 class Room extends Model {
   apartment () {
     return this.belongsTo('App/Models/Room')
+  }
+
+  tenant () {
+    return this.belongsTo('App/Models/User')
   }
 }
 
