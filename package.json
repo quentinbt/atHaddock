@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "heroku-postbuild": "ENV_SILENT=true node ace swagger:export && cd config && rm swagger.js && mv main-swagger.js ./swagger.js "
   },
   "keywords": [
     "adonisjs",
